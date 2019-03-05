@@ -39,9 +39,10 @@ axios.get("https://www.sourcewell-mn.gov/cooperative-purchasing/022217-wex").the
   let $ = cheerio.load(res.data)
 
   //Grab elements from the page and save to variables by looping through each child element in parent element
-  $(".vendor-contract-header__container").children(".row").children(".col-xs-12 col-sm-8").children(".vendor-contract-header__content").each((element)=>{
+  $(".vendor-contract-header__container").children(".row").find(".col-xs-12 col-sm-8").children(".vendor-contract-header__content").each((element)=>{
+    console.log("inside for each");
     //save HTML data to variables
-    title = $(element).children("p.lead").text()
+    title = $(element).children("p").find("p.lead").text()
     // expiration = $(element).children("p").text()
     // contractNum = $(element).children("p").text()
     // vendorName = $(element).children(".vendor-contract-header_content").find("h1").text()
