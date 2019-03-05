@@ -39,17 +39,13 @@ axios.get("https://www.sourcewell-mn.gov/cooperative-purchasing/022217-wex").the
   let $ = cheerio.load(res.data)
 
   //Grab elements from the page and save to variables by looping through each child element in parent element
-  $("col-xs-12 col-sm-8").each((element)=>{
+  $(".vendor-contract-header__container").children(".row").children(".col-xs-12 col-sm-8").each((element)=>{
     //save HTML data to variables
-    title = $(element).children(".vendor-contract-header_content").children("p").find(".lead").text()
+    title = $(element).children("p.lead").text()
     expiration = $(element).children("p").text()
     contractNum = $(element).children("p").text()
     vendorName = $(element).children(".vendor-contract-header_content").find("h1").text()
   })
-
-
-    //variables for this scrape
-
 
       //grab elements
       $("field field--name-field-contract-documents field--type-file field--label-above").each((element)=>{
@@ -68,32 +64,32 @@ axios.get("https://www.sourcewell-mn.gov/cooperative-purchasing/022217-wex").the
 
 
           //push data to empty array assigned above
-          vendorContract.push({
-            title: title,
-            expiration: expiration,
-            contract_number: contractNum,
-            files: [
-              {
-                contractforms: contractForms
-              }
-            ],
-            vendor: {
-              name: vendorName,
-              contacts: [
-                {
-                  name: contactsName,
-                  phone: phone,
-                  email: email
-                }
-              ]
-            }
-          }) // ends push
         }) // ends .each
 
+        vendorContract.push({
+          title: title
+          // expiration: expiration,
+          // contract_number: contractNum,
+          // files: [
+            //   {
+              //     contractforms: contractForms
+              //   }
+              // ],
+              // vendor: {
+                //   name: vendorName,
+                //   contacts: [
+                  //     {
+                    //       name: contactsName,
+                    //       phone: phone,
+                    //       email: email
+                    //     }
+                    //   ]
+                    // }
+                  }) // ends push
         //Convert data to JSON object
         vendorContractJSON = JSON.stringify(vendorContract, null, 4)
 
-        console.log(vendorContractJSON);
+        console.log(vendorContract);
 
 
 }) //closes first scrape
