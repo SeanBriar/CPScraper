@@ -39,33 +39,33 @@ axios.get("https://www.sourcewell-mn.gov/cooperative-purchasing/022217-wex").the
   let $ = cheerio.load(res.data)
 
   //Grab elements from the page and save to variables by looping through each child element in parent element
-  $(".vendor-contract-header__container").children(".row").children(".col-xs-12 col-sm-8").each((element)=>{
+  $(".vendor-contract-header__container").children(".row").children(".col-xs-12 col-sm-8").children(".vendor-contract-header__content").each((element)=>{
     //save HTML data to variables
     title = $(element).children("p.lead").text()
-    expiration = $(element).children("p").text()
-    contractNum = $(element).children("p").text()
-    vendorName = $(element).children(".vendor-contract-header_content").find("h1").text()
+    // expiration = $(element).children("p").text()
+    // contractNum = $(element).children("p").text()
+    // vendorName = $(element).children(".vendor-contract-header_content").find("h1").text()
   })
 
-      //grab elements
-      $("field field--name-field-contract-documents field--type-file field--label-above").each((element)=>{
-        //save to variable
-        contractForms = $(element).children(".field--item").children("span.file-link").find("a").attr("href")
-      })
+      // //grab elements
+      // $("field field--name-field-contract-documents field--type-file field--label-above").each((element)=>{
+      //   //save to variable
+      //   contractForms = $(element).children(".field--item").children("span.file-link").find("a").attr("href")
+      // })
+      //
+      //   //variables
+      //
+      //   // get the data
+      //   $(".contract-marketing full clearfix vendor-contract").each((element)=> {
+      //     // save to variable
+      //     contactsName = $(".div.inline-user").children("div.inline-user").children("div").text()
+      //     phone = $(".div.inline-user").children("div.inline-user").children("div").text()
+      //     email = $(".div.inline-user").children("div.inline-user").children("div").text()
+      //
+      //
+      //   }) // ends .each
 
-        //variables
-
-        // get the data
-        $(".contract-marketing full clearfix vendor-contract").each((element)=> {
-          // save to variable
-          contactsName = $(".div.inline-user").children("div.inline-user").children("div").text()
-          phone = $(".div.inline-user").children("div.inline-user").children("div").text()
-          email = $(".div.inline-user").children("div.inline-user").children("div").text()
-
-
-          //push data to empty array assigned above
-        }) // ends .each
-
+       //push data to empty array assigned above
         vendorContract.push({
           title: title
           // expiration: expiration,
