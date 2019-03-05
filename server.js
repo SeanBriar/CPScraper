@@ -26,9 +26,13 @@ const axios = require("axios")
 //  * First scrape *
 axios.get("https://www.sourcewell-mn.gov/cooperative-purchasing/022217-wex").then((res)=> {
   //variables
+  let phone
+  let email
   let title
   let expiration
   let contractNum
+  let contactsName
+  let contractForms
   let vendorContract = []
   let vendorContractJSON = {}
   //initiate cheerio using $ variable
@@ -44,12 +48,8 @@ axios.get("https://www.sourcewell-mn.gov/cooperative-purchasing/022217-wex").the
   })
 
 
-  // * Second scrape *
-  axios.get("https://www.sourcewell-mn.gov/cooperative-purchasing/022217-wex#tab-contract-documents").then((res)=>{
     //variables for this scrape
-    let contractForms
-    //redefine $ for new page/data
-      let $ = cheerio.load(res.data)
+
 
       //grab elements
       $("field field--name-field-contract-documents field--type-file field--label-above").each((element)=>{
@@ -57,15 +57,7 @@ axios.get("https://www.sourcewell-mn.gov/cooperative-purchasing/022217-wex").the
         contractForms = $(element).children(".field--item").children("span.file-link").find("a").attr("href")
       })
 
-
-      // * third scrape *
-      axios.get("https://www.sourcewell-mn.gov/cooperative-purchasing/022217-wex#tab-contact-information").then((res)=>{
         //variables
-        let contactsName
-        let phone
-        let email
-        //redefine $ for new page/data
-        let $ = cheerio.load(res.data)
 
         // get the data
         $(".contract-marketing full clearfix vendor-contract").each((element)=> {
@@ -102,13 +94,6 @@ axios.get("https://www.sourcewell-mn.gov/cooperative-purchasing/022217-wex").the
         vendorContractJSON = JSON.stringify(vendorContract, null, 4)
 
         console.log(vendorContractJSON);
-      }) // closes third scrape
 
-  }) //closes second scrape
 
 }) //closes first scrape
-
-
-//Challenges:
-  // It seems like nesting axios requests is a bad idea, but I was having issues with scope and combining all the data into one JSON object.
-  // Also, gathering the data from the 'contacts' site was a bit tricky because of the class and elements used to build the site - there wasn't much individuality between each piece of data.
